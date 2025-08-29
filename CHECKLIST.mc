@@ -59,7 +59,7 @@
   - Sign In User
 - FINISH PART 1
 
-== PART 2 (56:20) == 1:14:04
+== PART 2 (56:20) ==
 
 - Showcase `onRequest` and `onResponse`
 - Showcase Full Cycle Again
@@ -94,7 +94,7 @@
 - PLUGINS - **nextCookies()**
 - FINISH PART 2
 
-== PART 3 ==
+== PART 3 (1:36:41) ==
 
 - Get Session on Client
   - Create Get Started Button

@@ -2,6 +2,7 @@
 
 import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
+import { APIError } from 'better-auth/api';
 
 export const signInEmailAction = async (formData: FormData) => {
   const email = formData.get('email') as string;
@@ -21,9 +22,9 @@ export const signInEmailAction = async (formData: FormData) => {
 
     return { error: null };
   } catch (err) {
-    if (err instanceof Error) {
+    if (err instanceof APIError) {
       return {
-        error: `Ooops! Something went wrong with login: ${err.message}`,
+        error: err.message,
       };
     }
 
