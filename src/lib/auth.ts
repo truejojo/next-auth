@@ -1,10 +1,10 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { nextCookies } from 'better-auth/next-js';
-import { createAuthMiddleware, APIError } from 'better-auth/api';
+// import { createAuthMiddleware, APIError } from 'better-auth/api';
 
 import { prisma } from '@/lib/prisma';
-import { normalizeName, VALID_DOMAINS } from '@/lib/utils';
+// import { normalizeName, VALID_DOMAINS } from '@/lib/utils';
 // import { hashPassword, verifyPassword } from '@/lib/argon2';
 
 export const auth = betterAuth({
@@ -43,6 +43,15 @@ export const auth = betterAuth({
     //     };
     //   }
     // }),
+  },
+  user: {
+    additionalFields: {
+      role: {
+        type: ['USER', 'ADMIN'],
+        input: false,
+        // values: Object.values(UserRole),
+      },
+    },
   },
   session: {
     // expiresIn: 15, // seconds
