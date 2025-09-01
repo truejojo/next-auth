@@ -3,6 +3,8 @@ import { auth } from '@/lib/auth';
 import SignOutButton from '@/components/sign-out-button';
 import ReturnButton from '@/components/return-button';
 import { redirect } from 'next/navigation';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 const ProfilePage = async () => {
   const session = await auth.api.getSession({
@@ -18,7 +20,14 @@ const ProfilePage = async () => {
         <h1 className='text-3xl font-bold'>ProfilePage</h1>
       </div>
 
-      <SignOutButton />
+      <div className='flex items-center gap-2'>
+        {session.user.role === 'ADMIN' && (
+          <Button size='sm' asChild>
+            <Link href='/admin/dashboard'>Admin Dashboard</Link>
+          </Button>
+        )}
+        <SignOutButton />
+      </div>
 
       <pre className='text-sm '>{JSON.stringify(session, null, 2)}</pre>
     </div>
