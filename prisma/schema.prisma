@@ -8,6 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// npx @better-auth/cli generate --output=roles.schema.prisma
 // Hint: when change models - npx prisma db push
 // or npx prisma migrate dev and npx prisma generate
 
@@ -36,10 +37,13 @@ model User {
   updatedAt DateTime
 
   name          String
-  email         String   @unique
+  email         String    @unique
   emailVerified Boolean
   image         String?
-  role          UserRole @default(USER)
+  role          UserRole  @default(USER)
+  banned        Boolean?
+  banReason     String?
+  banExpires    DateTime?
 
   sessions Session[]
   accounts Account[]
@@ -53,10 +57,11 @@ model Session {
   createdAt DateTime
   updatedAt DateTime
 
-  expiresAt DateTime
-  token     String   @unique
-  ipAddress String?
-  userAgent String?
+  expiresAt      DateTime
+  token          String   @unique
+  ipAddress      String?
+  userAgent      String?
+  impersonatedBy String?
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)

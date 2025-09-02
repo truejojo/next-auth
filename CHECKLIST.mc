@@ -112,7 +112,7 @@
   - Validate Email
   - Transform Name
 
-== PART 4 (2:09:16) ==
+== PART 4 (2:09:16) == (3:06:00)
 
 - Roles (Custom Method)
 - Prisma

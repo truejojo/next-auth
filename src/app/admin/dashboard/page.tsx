@@ -3,11 +3,12 @@ import { redirect } from 'next/navigation';
 
 import { auth } from '@/lib/auth';
 import ReturnButton from '@/components/return-button';
-import { prisma } from '@/lib/prisma';
 import {
   DeleteUserButton,
   PlaceholderDeleteUserButton,
 } from '@/components/delete-user-button';
+import { UserRoleSelect } from '@/components/user-role-select';
+import { UserRole } from '@/generated/prisma';
 
 export default async function Page() {
   const headersList = await headers();
@@ -33,10 +34,17 @@ export default async function Page() {
     );
   }
 
-  const users = await prisma.user.findMany({
-    orderBy: {
-      name: 'asc',
+  const { users } = await auth.api.listUsers({
+    headers: headersList,
+    query: {
+      sortBy: 'name',
     },
+  });
+
+  const sortUsersByRole = users.sort((a, b) => {
+    if (a.role === 'ADMIN' && b.role !== 'ADMIN') return -1;
+    if (a.role !== 'ADMIN' && b.role === 'ADMIN') return 1;
+    return 0;
   });
 
   return (
@@ -64,17 +72,16 @@ export default async function Page() {
           </thead>
 
           <tbody>
-            {users.map((user) => (
+            {sortUsersByRole.map((user) => (
               <tr key={user.id} className='border-b text-sm text-left'>
                 <td className='px-4 py-2'>{user.id.slice(0, 8)}</td>
                 <td className='px-4 py-2'>{user.name}</td>
                 <td className='px-4 py-2'>{user.email}</td>
                 <td className='px-4 py-2 text-center'>
-                  {user.role}
-                  {/* <UserRoleSelect
+                  <UserRoleSelect
                     userId={user.id}
                     role={user.role as UserRole}
-                  /> */}
+                  />
                 </td>
                 <td className='px-4 py-2 text-center'>
                   {user.role === 'ADMIN' || user.id === session.user.id ? (
