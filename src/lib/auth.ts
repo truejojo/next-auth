@@ -81,7 +81,9 @@ export const auth = betterAuth({
     expiresIn: 30 * 24 * 60 * 60, // 30 days
   },
   account: {
-    enabled: false,
+    accountLinking: {
+      enabled: false,
+    },
   },
   advanced: {
     database: {
