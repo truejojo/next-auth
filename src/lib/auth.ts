@@ -72,16 +72,16 @@ export const auth = betterAuth({
   user: {
     additionalFields: {
       role: {
-        // type: ['USER', 'ADMIN'],
         type: [UserRole.USER, UserRole.ADMIN],
         input: false,
-        // values: Object.values(UserRole),
       },
     },
   },
   session: {
-    // expiresIn: 15, // seconds
     expiresIn: 30 * 24 * 60 * 60, // 30 days
+  },
+  account: {
+    enabled: false,
   },
   advanced: {
     database: {
